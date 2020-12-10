@@ -23,7 +23,7 @@ public class OrderParser implements Parser<Order> {
         if (!stringForParsing.startsWith(ID_PREFIX)) {
             String message = String.format("Given: %s doesn't fit format: %s",
                     stringForParsing,
-                    "id:x; orderDate:date; deliveryDate:date; orderOwnerId:x; foodListId:[x...];"
+                    "orderId:x; orderDate:date; deliveryDate:date; orderOwnerId:x; foodListId:[x...];"
             );
             throw new DataException(message);
         }
