@@ -1,13 +1,13 @@
 package by.food.orders.data.reader;
 
 import by.food.orders.data.DataException;
-import by.food.orders.entity.Order;
 
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrderDataReader implements DataReader {
+
 
     @Override
     public List<String> readData(String filePath) throws DataException {
@@ -19,8 +19,8 @@ public class OrderDataReader implements DataReader {
                 currentOrder = reader.readLine();
 		  }
             return result;
-	   } catch (IOException e) {
-		  throw new DataException(e.getMessage(), e);
+	   } catch (IOException exception) {
+		  throw new DataException(exception.getMessage(), exception);
 	   }
     }
 }
