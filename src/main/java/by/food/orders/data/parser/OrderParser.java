@@ -50,11 +50,11 @@ public class OrderParser implements Parser<Order> {
                 while (stringForParsing.charAt(runner) != SEMI_COLUMN_CHAR && (runner < stringForParsing.length() - 1)) {
                     ++runner;
                 }
-                //copy value to variable
+                //copy value to variable from string
                 String value = stringForParsing.substring(0, runner);
                 //put couple "prefix:value" to fields map
                 fieldData.put(prefix, value);
-                //delete key and value from string
+                //delete value from string
                 stringForParsing = stringForParsing.replaceFirst(fieldData.get(prefix) + SEMI_COLUMN + " ", NOTHING);
             }
         }
@@ -73,6 +73,7 @@ public class OrderParser implements Parser<Order> {
         Date orderDate = new Date(Long.parseLong(stringOrderDate));
         Date deliveryDate = new Date(Long.parseLong(stringDeliveryDate));
         long orderOwnerId = Long.parseLong(stringOwnerId);
+        //parse food ids string to list of ids
         List<Long> foodListId = parseFoodIdsToList(stringFoodListId);
         return new Order(orderId, orderDate, deliveryDate, orderOwnerId, foodListId);
     }
