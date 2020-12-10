@@ -4,7 +4,10 @@ import by.food.orders.data.DataException;
 import by.food.orders.entity.Order;
 
 import java.sql.Date;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class OrderParser implements Parser<Order> {
     private static final String ID_PREFIX = "orderId";
@@ -46,10 +49,7 @@ public class OrderParser implements Parser<Order> {
                 //remove current prefix from string
                 stringForParsing = stringForParsing.replace(prefix + DATA_DELIMITER, NOTHING);
                 //find end of the value in string
-                int runner = 0;
-                while (stringForParsing.charAt(runner) != SEMI_COLUMN_CHAR && (runner < stringForParsing.length() - 1)) {
-                    ++runner;
-                }
+                int runner = getValueLength(stringForParsing);
                 //copy value to variable from string
                 String value = stringForParsing.substring(0, runner);
                 //put couple "prefix:value" to fields map
@@ -58,6 +58,14 @@ public class OrderParser implements Parser<Order> {
                 stringForParsing = stringForParsing.replaceFirst(fieldData.get(prefix) + SEMI_COLUMN + " ", NOTHING);
             }
         }
+    }
+
+    private int getValueLength(String stringForParsing) {
+        int runner = 0;
+        while (stringForParsing.charAt(runner) != SEMI_COLUMN_CHAR && (runner < stringForParsing.length() - 1)) {
+            ++runner;
+        }
+        return runner;
     }
 
 
@@ -83,7 +91,7 @@ public class OrderParser implements Parser<Order> {
         stringFoodListId = stringFoodListId.substring(1, stringFoodListId.length() - 1);
         List<Long> foodListId = new ArrayList<>();
         String[] values = stringFoodListId.split(SPLIT_PATTERN);
-        for (String value: values) {
+        for (String value : values) {
             foodListId.add(Long.valueOf(value));
         }
         return foodListId;
