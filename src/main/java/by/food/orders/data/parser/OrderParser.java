@@ -16,6 +16,7 @@ public class OrderParser implements Parser<Order> {
     private static final String NOTHING = "";
     private static final String SEMI_COLUMN = ";";
     private static final char SEMI_COLUMN_CHAR = ';';
+    private static final String SPLIT_PATTERN = ", ";
 
 
     @Override
@@ -80,7 +81,7 @@ public class OrderParser implements Parser<Order> {
         //parse [x...] to List<Long>
         stringFoodListId = stringFoodListId.substring(1, stringFoodListId.length() - 1);
         List<Long> foodListId = new ArrayList<>();
-        String[] values = stringFoodListId.split(", ");
+        String[] values = stringFoodListId.split(SPLIT_PATTERN);
         for (String value: values) {
             foodListId.add(Long.valueOf(value));
         }
