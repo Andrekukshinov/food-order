@@ -68,10 +68,10 @@ public class OrderParser implements Parser<Order> {
         String stringOwnerId = fieldData.get(ORDER_OWNER_ID_PREFIX);
         String stringFoodListId = fieldData.get(FOOD_LIST_ID_PREFIX);
         // parse all fields data for Order object
-        Long orderId = Long.parseLong(stringId);
+        long orderId = Long.parseLong(stringId);
         Date orderDate = new Date(Long.parseLong(stringOrderDate));
         Date deliveryDate = new Date(Long.parseLong(stringDeliveryDate));
-        Long orderOwnerId = Long.parseLong(stringOwnerId);
+        long orderOwnerId = Long.parseLong(stringOwnerId);
         List<Long> foodListId = parseFoodIdsToList(stringFoodListId);
         return new Order(orderId, orderDate, deliveryDate, orderOwnerId, foodListId);
     }
