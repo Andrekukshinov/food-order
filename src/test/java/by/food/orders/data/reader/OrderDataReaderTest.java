@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class OrderDataReaderTest {
-
     private static final String SRC_TEST_ORDERS = "src/test/resources/orders.txt";
     private static final String INVALID_PATH = "nothing";
 
