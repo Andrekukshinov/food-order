@@ -4,13 +4,13 @@ import java.lang.*;
 public class ProductFood extends Product {
     private String description;
 
-    ProductFood(String name, Double price, String description){
-        super(name, price); //вызов родительского конструктора с аргументами
+    ProductFood(Integer id, String name, Double price, String description){
+        super(id, name, price); //вызов родительского конструктора с аргументами
         this.description = description;
     }
 
     @Override
-    public String printData() {
+    public String ToString() {
         return this.name.toUpperCase() + " --- Цена: " + this.price + "BYN --- " + this.description;
     }
 }
