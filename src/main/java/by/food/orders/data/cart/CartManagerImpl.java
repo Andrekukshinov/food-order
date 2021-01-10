@@ -1,7 +1,7 @@
 package by.food.orders.data.cart;
 
 import by.food.orders.entity.CartItem;
-import by.food.orders.application.Product;
+import by.food.orders.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;

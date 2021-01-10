@@ -1,4 +1,4 @@
-package by.food.orders.application;
+package by.food.orders.data;
 
 public class Menu {
     public void showMenu () {

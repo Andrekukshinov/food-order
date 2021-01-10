@@ -1,10 +1,11 @@
-package by.food.orders.application;
+package by.food.orders.entity;
 import java.lang.*;
+import java.math.BigDecimal;
 
 public class ProductFood extends Product {
     private final String description;
 
-    public ProductFood(Long id, String name, Double price, String description){
+    public ProductFood(Long id, String name, BigDecimal price, String description){
         super(id, name, price);
         this.description = description;
     }

@@ -1,5 +1,6 @@
 package by.food.orders.application;
 
+import by.food.orders.data.Menu;
 import by.food.orders.data.cart.Cart;
 import by.food.orders.data.cart.CartManager;
 import by.food.orders.data.cart.CartManagerImpl;
@@ -10,11 +11,13 @@ import by.food.orders.data.dao.api.UserDao;
 import by.food.orders.data.storage.Catalog;
 import by.food.orders.entity.CartItem;
 import by.food.orders.entity.Order;
+import by.food.orders.entity.Product;
 import by.food.orders.entity.User;
-import by.food.orders.exception.CatalogException;
 import by.food.orders.exception.NoSuchUserException;
 import by.food.orders.logics.AuthenticationManager;
+import by.food.orders.logics.OrderManager;
 
+import javax.xml.catalog.CatalogException;
 import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -104,6 +107,7 @@ public class App {
                         cartManager.addToCart(product);
                         break;
                     case CONFIRM_ORDER:
+                        // TODO: 28.12.2020 impl
                         List<CartItem> cartItems = cartManager.getCartItems();
                         if (cartItems.size() > 0) {
                             System.out.println("Set delivery date in format yyyy-mm-dd");

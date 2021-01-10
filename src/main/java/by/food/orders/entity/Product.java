@@ -1,12 +1,13 @@
-package by.food.orders.application;
+package by.food.orders.entity;
 import java.lang.*;
+import java.math.BigDecimal;
 
 public class Product {
     protected String name;
-    protected Double price;
+    protected BigDecimal price;
     private Long id;
 
-    public Product(Long id, String name, Double price) {
+    public Product(Long id, String name, BigDecimal price) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -14,6 +15,10 @@ public class Product {
 
     public Long getId() {
         return id;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 
     @Override

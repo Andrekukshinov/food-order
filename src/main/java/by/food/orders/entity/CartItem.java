@@ -1,7 +1,5 @@
 package by.food.orders.entity;
 
-import by.food.orders.application.Product;
-
 public class CartItem {
     private Integer count;
     private final Product product;

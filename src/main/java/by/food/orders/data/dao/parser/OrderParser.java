@@ -3,6 +3,7 @@ package by.food.orders.data.dao.parser;
 import by.food.orders.exception.DataException;
 import by.food.orders.entity.Order;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 public class OrderParser implements Parser<Order> {
     private static final String ID_PREFIX = "orderId";
+    private static final String PRICE_PREFIX = "price";
     private static final String ORDER_DATE_PREFIX = "orderDate";
     private static final String DELIVERY_DATE_PREFIX = "deliveryDate";
     private static final String ORDER_OWNER_ID_PREFIX = "orderOwnerId";
@@ -34,7 +36,7 @@ public class OrderParser implements Parser<Order> {
         Map<String, String> fieldData = new HashMap<>();
         //prefixes to remove from starting string
         String[] prefixesArray = new String[]{
-                ID_PREFIX, ORDER_DATE_PREFIX, DELIVERY_DATE_PREFIX,
+                ID_PREFIX, PRICE_PREFIX, ORDER_DATE_PREFIX, DELIVERY_DATE_PREFIX,
                 ORDER_OWNER_ID_PREFIX, FOOD_LIST_ID_PREFIX
         };
         fillFieldData(stringForParsing, fieldData, prefixesArray);
@@ -76,14 +78,16 @@ public class OrderParser implements Parser<Order> {
         String stringOrderDate = fieldData.get(ORDER_DATE_PREFIX);
         String stringOwnerId = fieldData.get(ORDER_OWNER_ID_PREFIX);
         String stringFoodListId = fieldData.get(FOOD_LIST_ID_PREFIX);
+        String priceString = fieldData.get(PRICE_PREFIX);
         // parse all fields data for Order object
         long orderId = Long.parseLong(stringId);
         LocalDate orderDate = LocalDate.parse(stringOrderDate);
         LocalDate deliveryDate = LocalDate.parse(stringDeliveryDate);
         long orderOwnerId = Long.parseLong(stringOwnerId);
+        BigDecimal price = new BigDecimal(priceString);
         //parse food ids string to list of ids
         List<Long> foodListId = parseFoodIdsToList(stringFoodListId);
-        return new Order(orderId, orderDate, deliveryDate, orderOwnerId, foodListId);
+        return new Order(orderId, orderDate, deliveryDate, orderOwnerId, foodListId, price);
     }
 
     private List<Long> parseFoodIdsToList(String stringFoodListId) {
