@@ -1,6 +1,6 @@
 package by.food.orders.data.reader;
 
-import by.food.orders.data.DataException;
+import by.food.orders.exception.DataException;
 
 import java.util.List;
 

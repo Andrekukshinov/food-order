@@ -1,17 +1,14 @@
 package by.food.orders.data.reader;
 
 
-import by.food.orders.data.DataException;
-import org.junit.Before;
+import by.food.orders.exception.DataException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
 public class OrderDataReaderTest {
-
     private static final String SRC_TEST_ORDERS = "src/test/resources/orders.txt";
     private static final String INVALID_PATH = "nothing";
 

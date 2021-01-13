@@ -1,4 +1,4 @@
-package by.food.orders.data;
+package by.food.orders.exception;
 
 public class DataException extends Exception{
     public DataException() {
