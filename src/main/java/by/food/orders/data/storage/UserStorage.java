@@ -25,7 +25,8 @@ public class UserStorage {
             new User("admin", "pass"),
             new User("Peter", "pass"),
             new User("Van", "pass"),
-            new User("Bill", "pass")
+            new User("Bill", "pass"),
+            new User("Lena", "1111")
     );
 
     public List<User> getUsers() {

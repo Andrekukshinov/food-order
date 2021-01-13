@@ -9,9 +9,7 @@ public class OrderStorageDaoImpl implements OrderDao {
 
     private final OrderStorage orderStorage;
 
-    public OrderStorageDaoImpl() {
-        orderStorage = OrderStorage.getInstance();
-    }
+    public OrderStorageDaoImpl() { orderStorage = OrderStorage.getInstance();}
 
     @Override
     public void save(Order order) throws DaoException {

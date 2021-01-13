@@ -19,9 +19,7 @@ import by.food.orders.logics.OrderManager;
 
 import javax.xml.catalog.CatalogException;
 import java.time.LocalDate;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 
 enum UserChoice {
@@ -55,7 +53,7 @@ enum UserChoice {
 
 public class App {
 
-    private static final String NOT_FOUND = "Код продукта не введен. Попробуйте еще раз";
+    private static final String NOT_FOUND = "Code is incorrect. Please, try again";
 
     public static void main(String[] args) {
         //OrderManager orderManager = new OrderManager();
@@ -80,9 +78,10 @@ public class App {
             String pass = scanner.nextLine();
             try {
                 sessionUser = authenticationManager.authenticateByCredentials(login, pass);
+                System.out.println("sessionUser:" + sessionUser);
             } catch (NoSuchUserException e) {
                 System.out.println(e.getMessage());
-                System.out.println("try again");
+                System.out.println("Try again, please");
                 continue;
             }
             isNotAuthenticated = false;
@@ -91,7 +90,7 @@ public class App {
         while (!UserChoice.EXIT.equals(userChoice)) {
             menu.showMenu();
             try {
-                int userChoiceInt = scanner.nextInt();
+                int userChoiceInt = Integer.parseInt(scanner.nextLine());
                 userChoice = UserChoice.fromInt(userChoiceInt);
                 switch (userChoice) {
                     case SHOW_CATALOG:
@@ -101,23 +100,33 @@ public class App {
                         cartManager.render();
                         break;
                     case ADD_PRODUCT_TO_CART:
-                        System.out.println("Введите код продукта");
-                        Long productNum = scanner.nextLong();
-                        Product product = catalog.getProduct(productNum).orElseThrow(() -> new CatalogException(NOT_FOUND));
-                        cartManager.addToCart(product);
+                        do {
+                            System.out.println("Enter code of product or enter 0 to exit to menu");
+                            Long productNum = Long.parseLong(scanner.nextLine());
+                            if (productNum == 0) {
+                                break;
+                            }
+                            Optional<Product> product = catalog.getProduct(productNum);
+                            if (product.isPresent()) {
+                                cartManager.addToCart(product.get()); //get метод Optional
+                                break;
+                            } else {
+                                System.out.println("Code is incorrect. Please, try again");
+                                System.out.println("----------------------------------------");
+                            }
+                        }
+                        while (true);
                         break;
                     case CONFIRM_ORDER:
-                        // TODO: 28.12.2020 impl
                         List<CartItem> cartItems = cartManager.getCartItems();
                         if (cartItems.size() > 0) {
+                            System.out.println("=== CHECKOUT ORDER ===");
                             System.out.println("Set delivery date in format yyyy-mm-dd");
-
-                            scanner.nextLine();
                             String deliveryDateString = scanner.nextLine();
                             LocalDate deliveryDate = LocalDate.parse(deliveryDateString);
 
-                            Long id = sessionUser.getId();
-                            Order cartOrder = orderManager.getCartOrder(cartManager, deliveryDate, id);
+                            Long userId = sessionUser.getId();
+                            Order cartOrder = orderManager.getCartOrder(cartManager, deliveryDate, userId);
                             orderDao.save(cartOrder);
                             cartManager.clearCart();
                         }
@@ -128,7 +137,7 @@ public class App {
                     case EXIT:
                         break;
                     default:
-                        System.out.println("Выберите существующий пункт меню");
+                        System.out.println("choose the correct menu item");
                         break;
                 }
             } catch (InputMismatchException e) {
