@@ -1,6 +1,6 @@
 package by.food.orders.data.parser;
 
-
+/*
 import by.food.orders.exception.DataException;
 import by.food.orders.data.dao.parser.OrderParser;
 import by.food.orders.data.dao.parser.Parser;
@@ -26,4 +26,4 @@ public class OrderParserTest {
     }
 }
 
-
+*/

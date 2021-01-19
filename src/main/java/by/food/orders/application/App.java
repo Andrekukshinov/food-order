@@ -109,6 +109,9 @@ public class App {
                             Optional<Product> product = catalog.getProduct(productNum);
                             if (product.isPresent()) {
                                 cartManager.addToCart(product.get()); //get метод Optional
+                                System.out.println(product.get());
+                                System.out.println("Product was added to cart");
+                                System.out.println("----------------------------------------");
                                 break;
                             } else {
                                 System.out.println("Code is incorrect. Please, try again");
@@ -120,24 +123,35 @@ public class App {
                     case CONFIRM_ORDER:
                         List<CartItem> cartItems = cartManager.getCartItems();
                         if (cartItems.size() > 0) {
+                            Long userId = sessionUser.getId();
                             System.out.println("=== CHECKOUT ORDER ===");
                             System.out.println("Set delivery date in format yyyy-mm-dd");
                             String deliveryDateString = scanner.nextLine();
                             LocalDate deliveryDate = LocalDate.parse(deliveryDateString);
-
-                            Long userId = sessionUser.getId();
                             Order cartOrder = orderManager.getCartOrder(cartManager, deliveryDate, userId);
                             orderDao.save(cartOrder);
+                            orderDao.saveToFile();
                             cartManager.clearCart();
                         }
                         break;
                     case SHOW_ORDERS:
-                        // TODO: 28.12.2020 impl
+                        Long userId = sessionUser.getId();
+                        orderDao.loadFromFile();
+                        List <Order> userOrders = orderDao.getUserOrders(userId);
+                        if (userOrders.isEmpty()) {
+                            System.out.println("You don't have orders");
+                            break;
+                        }
+                        System.out.println("Your orders: ");
+                        for (Order order : userOrders) {
+                            System.out.println(order.toString());
+                            System.out.println("----------------------------------------");
+                        };
                         break;
                     case EXIT:
                         break;
                     default:
-                        System.out.println("choose the correct menu item");
+                        System.out.println("Choose the correct menu item");
                         break;
                 }
             } catch (InputMismatchException e) {
@@ -149,5 +163,3 @@ public class App {
         }
     }
 }
-// TODO: 05.01.2021 add user's order & remove from cart
-// TODO: 05.01.2021 show orders

@@ -10,8 +10,7 @@ public class OrderStorage {
 
     private List<Order> orders = new ArrayList<>();
 
-    private OrderStorage() {
-    }
+    private OrderStorage() {}  //паттерн Singleton
 
     public static OrderStorage getInstance() {
         if (instance == null) {
@@ -21,10 +20,16 @@ public class OrderStorage {
         return instance;
     }
 
-
-
     public void addOrder(Order order){
         orders.add(order);
     }
 
+    public void setOrders(List<Order> orderList){
+        orders.clear();
+        for (Order order : orderList) { addOrder(order); }
+    }
+
+    public List<Order> getOrders(){
+        return this.orders;
+    }
 }

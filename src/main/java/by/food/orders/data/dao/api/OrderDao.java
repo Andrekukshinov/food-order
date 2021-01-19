@@ -7,4 +7,12 @@ import java.util.List;
 
 public interface OrderDao {
     void save(Order order) throws DaoException;
+
+    void saveToFile() throws DaoException;
+
+    List<Order> loadFromFile() throws DaoException;
+
+    List<Order> getUserOrders(Long userId) throws DaoException;
 }
+
+
