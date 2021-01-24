@@ -5,27 +5,37 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class Order {
+	private static int idCounter = 0;
+
     private long id;
     private final LocalDate orderDate;
     private final LocalDate deliveryDate;
     private long orderOwnerId;
     private List<Long> foodListId;
     private BigDecimal totalPrice;
-    //add total price
 
 
     public Order(
 			long id, LocalDate orderDate, LocalDate deliveryLocalDate, long orderOwnerId,
 			List<Long> foodListId, BigDecimal totalPrice) {
 	   this.id = id;
-		this.orderDate = orderDate;
-		this.deliveryDate = deliveryLocalDate;
+	   this.orderDate = orderDate;
+	   this.deliveryDate = deliveryLocalDate;
 	   this.orderOwnerId = orderOwnerId;
 	   this.foodListId = foodListId;
+	   this.totalPrice = totalPrice;
+	}
+
+	public Order(LocalDate orderDate, LocalDate deliveryDate, long orderOwnerId, List<Long> foodListId, BigDecimal totalPrice) {
+		id = idCounter++;
+    	this.orderDate = orderDate;
+		this.deliveryDate = deliveryDate;
+		this.orderOwnerId = orderOwnerId;
+		this.foodListId = foodListId;
 		this.totalPrice = totalPrice;
 	}
 
-    public long getId() {
+	public long getId() {
 	   return id;
     }
 
@@ -67,7 +77,7 @@ public class Order {
 
 	@Override
     public String toString() {
-	   return "id:" + id + "; price" + totalPrice + "; orderDate:" + orderDate + "; deliveryDate:" + deliveryDate + "; orderOwnerId:" + orderOwnerId + "; foodListId:" + foodListId;
+	   return "id: " + id + ";\n price: " + totalPrice + " BYN;\n orderDate:" + orderDate + ";\n deliveryDate:" + deliveryDate + ";\n orderOwnerId:" + orderOwnerId + ";\n foodListId:" + foodListId;
     }
 
 	@Override
@@ -108,5 +118,9 @@ public class Order {
 		result = 31 * result + (getFoodListId() != null ? getFoodListId().hashCode() : 0);
 		result = 31 * result + (getTotalPrice() != null ? getTotalPrice().hashCode() : 0);
 		return result;
+	}
+
+	public long getOwnerId() {
+		return orderOwnerId;
 	}
 }

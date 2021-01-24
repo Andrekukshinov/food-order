@@ -11,7 +11,7 @@ import java.util.Set;
 public class CartManagerImpl implements CartManager {
     private Cart cart;
 
-    public CartManagerImpl(Cart cart) {
+    public CartManagerImpl(Cart cart) {//ссылка на корзину
         this.cart = cart;
     }
 
@@ -44,9 +44,9 @@ public class CartManagerImpl implements CartManager {
     @Override
     public void render() {
         Map<Long, CartItem> products = cart.getProducts();
-        System.out.println("=== КОРЗИНА ===");
+        System.out.println("=== Cart ===");
         if(products.isEmpty()) {
-            System.out.println("Корзина пустая. Нажмите 1 для перехода в каталог");
+            System.out.println("Cart is empty");
         } else {
             for (Long i : products.keySet()) {
                 System.out.println(products.get(i).toString());
