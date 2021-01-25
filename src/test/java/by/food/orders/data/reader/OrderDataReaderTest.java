@@ -1,7 +1,7 @@
 package by.food.orders.data.reader;
 
 
-import by.food.orders.exception.DataException;
+/*import by.food.orders.exception.DataException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -33,4 +33,4 @@ public class OrderDataReaderTest {
 	   List<String> actualOrders = dataReader.readData(INVALID_PATH);
 	   Assert.assertEquals(actualOrders, EXPECTED_ORDERS);
     }
-}
+}*/

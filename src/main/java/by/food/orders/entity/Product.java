@@ -51,6 +51,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return this.name.toUpperCase() + " --- Цена: " + this.price + "BYN";
+        return this.name.toUpperCase() + " --- Price: " + this.price + "BYN";
     }
 }

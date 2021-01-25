@@ -55,6 +55,6 @@ public class CartItem {
     }
 
     public String toString() {
-        return String.format("Продукт: %s, штук %d", product.toString(), count);
+        return String.format("Item name: %s, amount - %d", product.toString(), count);
     }
 }
