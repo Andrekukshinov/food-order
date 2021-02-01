@@ -17,6 +17,10 @@ public class Product {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public BigDecimal getPrice() {
         return price;
     }
@@ -53,4 +57,6 @@ public class Product {
     public String toString() {
         return this.name.toUpperCase() + " --- Price: " + this.price + "BYN";
     }
+
+
 }

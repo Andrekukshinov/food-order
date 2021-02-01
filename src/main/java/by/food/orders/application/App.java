@@ -132,6 +132,8 @@ public class App {
                             orderDao.save(cartOrder);
                             orderDao.saveToFile();
                             cartManager.clearCart();
+                        } else {
+                            System.out.println("Your cart is empty");
                         }
                         break;
                     case SHOW_ORDERS:
@@ -144,7 +146,7 @@ public class App {
                         }
                         System.out.println("Your orders: ");
                         for (Order order : userOrders) {
-                            System.out.println(order.toString());
+                            System.out.println(order.toStringView(catalog));
                             System.out.println("----------------------------------------");
                         };
                         break;

@@ -1,8 +1,13 @@
 package by.food.orders.entity;
 
+import by.food.orders.data.storage.Catalog;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.OptionalLong;
 
 public class Order {
     private long id;
@@ -70,6 +75,18 @@ public class Order {
     public String toString() {
 	   return "id: " + id + ";\n price: " + totalPrice + " BYN;\n orderDate:" + orderDate + ";\n deliveryDate:" + deliveryDate + ";\n orderOwnerId:" + orderOwnerId + ";\n foodListId:" + foodListId;
     }
+
+	public String toStringView(Catalog catalog) {
+		String products = "";
+		for (Long id : foodListId) {
+			Optional<Product> product = catalog.getProduct(id);
+			String productName = product.get().getName();
+
+			products = products.concat(productName + ", ") ;
+		};
+		return "price: " + totalPrice + " BYN;\n orderDate:" + orderDate + ";\n deliveryDate:" + deliveryDate +
+				"\n products:" + products;
+	}
 
 	@Override
 	public boolean equals(Object o) {

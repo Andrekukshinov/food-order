@@ -34,8 +34,10 @@ public class Catalog {
         }
     }
 
-    public Optional<Product> getProduct(Long productId) {
+    public Optional getProduct(Long productId) {
         Product value = catalog.get(productId);
+
         return Optional.ofNullable(value);
     }
+
 }

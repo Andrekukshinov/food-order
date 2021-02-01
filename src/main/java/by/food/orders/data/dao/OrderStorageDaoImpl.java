@@ -7,6 +7,8 @@ import by.food.orders.exception.DaoException;
 import by.food.orders.data.reader.OrderDataReaderWriterImpl;
 import by.food.orders.data.reader.DataReaderWriter;
 import by.food.orders.exception.DataException;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,27 +26,29 @@ public class OrderStorageDaoImpl implements OrderDao {
     }
 
     @Override
+    public List<Order> loadFromFile() throws DaoException {
+        List<Order> recievedData = new ArrayList<>();
+        try{
+            DataReaderWriter dataReader = new OrderDataReaderWriterImpl();
+            recievedData = dataReader.readJSONData(outputFileName);
+        } catch (DataException e) {
+            e.printStackTrace();
+        }
+        orderStorage.setOrders(recievedData);
+        return null;
+    };
+
+    @Override
     public void saveToFile() throws DaoException {
         try {
             DataReaderWriter dataWriter = new OrderDataReaderWriterImpl();
             List<Order> orders = orderStorage.getOrders();
             dataWriter.writeJSONData(outputFileName, orders);
             System.out.println("Your order was saved successfully");
+            orderStorage.clear();
         } catch (DataException e) {
             e.printStackTrace();
         };
-    };
-
-    @Override
-    public List<Order> loadFromFile() throws DaoException {
-        try{
-            DataReaderWriter dataReader = new OrderDataReaderWriterImpl();
-            List<Order> resultList = dataReader.readJSONData(outputFileName);
-            orderStorage.setOrders(resultList);
-        } catch (DataException e) {
-            e.printStackTrace();
-        }
-        return null;
     };
 
     @Override

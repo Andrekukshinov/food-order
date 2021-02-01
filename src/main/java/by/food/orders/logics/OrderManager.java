@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
+
+
 public class OrderManager {
 
     public Order getCartOrder(CartManager cartManager, LocalDate deliveryDate, Long buyerId) {
@@ -19,8 +21,7 @@ public class OrderManager {
         List<Long> productIds = new ArrayList<>();
         BigDecimal totalPrice = getTotalPrice(cartItems);
         addProductsToCart(cartItems, productIds);
-        //fixme change id value
-        int id = -1;
+        int id = (int) ( Math.random() * 600 );
         return new Order(id, orderDate, deliveryDate, buyerId, productIds, totalPrice);
     }
 
