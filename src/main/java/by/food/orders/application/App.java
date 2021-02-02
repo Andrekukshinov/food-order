@@ -13,6 +13,8 @@ import by.food.orders.entity.CartItem;
 import by.food.orders.entity.Order;
 import by.food.orders.entity.Product;
 import by.food.orders.entity.User;
+import by.food.orders.exception.DaoException;
+import by.food.orders.exception.DataException;
 import by.food.orders.exception.NoSuchUserException;
 import by.food.orders.logics.AuthenticationManager;
 import by.food.orders.logics.OrderManager;
@@ -60,7 +62,7 @@ public class App {
 
     private static final String NOT_FOUND = "Code is incorrect. Please, try again";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DataException {
         //OrderManager orderManager = new OrderManager();
         Scanner scanner = new Scanner(System.in);
         Catalog catalog = new Catalog();
@@ -83,7 +85,7 @@ public class App {
             String pass = scanner.nextLine();
             try {
                 sessionUser = authenticationManager.authenticateByCredentials(login, pass);
-            } catch (NoSuchUserException e) {
+            } catch (NoSuchUserException | DaoException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Try again, please");
                 continue;
