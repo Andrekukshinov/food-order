@@ -5,5 +5,5 @@ import java.util.List;
 
 public interface DataWriter<T> {
 
-    void writeJSONData(String filePath, List<T> data) throws DataException;
+    void writeJSONData(List<T> data) throws DataException;
 }

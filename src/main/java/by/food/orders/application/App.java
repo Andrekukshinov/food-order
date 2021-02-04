@@ -5,7 +5,7 @@ import by.food.orders.data.cart.Cart;
 import by.food.orders.data.cart.CartManager;
 import by.food.orders.data.cart.CartManagerImpl;
 import by.food.orders.data.dao.FileOrderDaoImpl;
-import by.food.orders.data.dao.UserStorageDao;
+import by.food.orders.data.dao.FileUserDao;
 import by.food.orders.data.dao.api.OrderDao;
 import by.food.orders.data.dao.api.UserDao;
 import by.food.orders.data.storage.Catalog;
@@ -13,12 +13,15 @@ import by.food.orders.entity.CartItem;
 import by.food.orders.entity.Order;
 import by.food.orders.entity.Product;
 import by.food.orders.entity.User;
-import by.food.orders.exception.NoSuchUserException;
+import by.food.orders.exception.DataException;
 import by.food.orders.logics.AuthenticationManager;
 import by.food.orders.logics.OrderManager;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Optional;
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -29,6 +32,7 @@ enum UserChoice {
     SHOW_CART_CONTENTS,
     CONFIRM_ORDER,
     SHOW_ORDERS,
+    LOG_OUT,
     EXIT;
 
     //fromInt - конвертация int в enum
@@ -45,6 +49,8 @@ enum UserChoice {
             case 5:
                 return SHOW_ORDERS;
             case 6:
+                return LOG_OUT;
+            case 7:
                 return EXIT;
         }
         return UNDEFINED;
@@ -58,38 +64,22 @@ public class App {
     //todo For ME split user and server part
     //todo For ME add re-login
 
-    private static final String NOT_FOUND = "Code is incorrect. Please, try again";
+    private static final String FILE_PATH_ORDERS = "src/data/source/orders.json";
+    private static final String FILE_PATH_USERS = "src/data/source/users.json";
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DataException {
         //OrderManager orderManager = new OrderManager();
         Scanner scanner = new Scanner(System.in);
         Catalog catalog = new Catalog();
         Cart cart = new Cart();
         UserChoice userChoice = null;
         Menu menu = new Menu();
-        User sessionUser = null;
         CartManager cartManager = new CartManagerImpl(cart);
-        UserDao userDao = new UserStorageDao();
-        OrderDao orderDao = new FileOrderDaoImpl();
+        UserDao userDao = new FileUserDao(FILE_PATH_USERS);
+        OrderDao orderDao = new FileOrderDaoImpl(FILE_PATH_ORDERS);
         OrderManager orderManager = new OrderManager();
         AuthenticationManager authenticationManager = new AuthenticationManager(userDao);
-        boolean isNotAuthenticated = true;
-
-        do {
-            System.out.println("Before making orders you should log in");
-            System.out.println("Your login:");
-            String login = scanner.nextLine();
-            System.out.println("Your pass:");
-            String pass = scanner.nextLine();
-            try {
-                sessionUser = authenticationManager.authenticateByCredentials(login, pass);
-            } catch (NoSuchUserException e) {
-                System.out.println(e.getMessage());
-                System.out.println("Try again, please");
-                continue;
-            }
-            isNotAuthenticated = false;
-        } while (isNotAuthenticated);
+        User sessionUser  = authenticationManager.authorize();
 
         while (!UserChoice.EXIT.equals(userChoice)) {
             menu.showMenu();
@@ -137,7 +127,7 @@ public class App {
                         break;
                     case SHOW_ORDERS:
                         Long userId = sessionUser.getId();
-                        List <Order> userOrders = orderDao.getUserOrders(userId);
+                        List<Order> userOrders = orderDao.getUserOrders(userId);
                         if (userOrders.isEmpty()) {
                             System.out.println("You don't have orders");
                             break;
@@ -146,7 +136,11 @@ public class App {
                         for (Order order : userOrders) {
                             System.out.println(order.toString());
                             System.out.println("----------------------------------------");
-                        };
+                        }
+                        ;
+                        break;
+                    case LOG_OUT:
+                        sessionUser = authenticationManager.authorize();
                         break;
                     case EXIT:
                         break;
@@ -162,4 +156,5 @@ public class App {
             }
         }
     }
+
 }

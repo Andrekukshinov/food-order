@@ -8,7 +8,8 @@ public class Menu {
         System.out.println("3. Show Cart Content");
         System.out.println("4. Checkout your order"); // обновить заказы в файле
         System.out.println("5. Show your orders"); // загрузить из файла
-        System.out.println("6. Exit");
+        System.out.println("6. Log in as another user");
+        System.out.println("7. Exit");
         System.out.println("===================================");
     }
 }

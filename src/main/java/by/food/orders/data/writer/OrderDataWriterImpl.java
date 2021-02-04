@@ -10,9 +10,14 @@ import java.io.IOException;
 import java.util.List;
 
 public class OrderDataWriterImpl implements DataWriter<Order> {
+    private final String filePath;
+
+    public OrderDataWriterImpl(String filePath) {
+        this.filePath = filePath;
+    }
 
     @Override
-    public void writeJSONData(String filePath, List<Order> data) throws DataException {
+    public void writeJSONData(List<Order> data) throws DataException {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             Gson gson = new Gson();
             String ordersJSON = gson.toJson(data);

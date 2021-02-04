@@ -9,5 +9,5 @@ public interface DataReader<T> {
 
     List<String> readData(String filePath) throws DataException;
 
-    List<Order> readJSONData(String filePath) throws DataException;
+    List<T> readJSONData(String filePath) throws DataException;
 }
