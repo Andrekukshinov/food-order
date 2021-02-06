@@ -39,7 +39,7 @@ public class AuthenticationManager {
         return user;
     }
 
-    private User authenticateByCredentials(String login, String pass) throws NoSuchUserException, DaoException {
+    public User authenticateByCredentials(String login, String pass) throws NoSuchUserException, DaoException {
         Optional<User> optionalUser = userDao.findByCredentials(login, pass);
         return optionalUser.orElseThrow(() -> new NoSuchUserException("user is not found!"));
     }

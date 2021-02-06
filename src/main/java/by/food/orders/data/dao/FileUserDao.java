@@ -30,10 +30,4 @@ public class FileUserDao implements UserDao {
             throw new DaoException(e.getMessage(), e);
         }
     }
-
-
-    @Override
-    public List<User> getUserFromFile() throws DaoException {
-        return null;
-    }
 }

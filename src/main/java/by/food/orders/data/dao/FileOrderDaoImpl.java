@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FileOrderDaoImpl implements OrderDao {
+    private static final String SUCCESS_ORDER = "Your order was saved successfully";
     private final String filePath;
 
     public FileOrderDaoImpl(String filePath) {
@@ -29,11 +30,10 @@ public class FileOrderDaoImpl implements OrderDao {
             List<Order> orders = getAll();
             orders.add(order);
             dataWriter.writeJSONData(orders);
-            System.out.println("Your order was saved successfully");
+            System.out.println(SUCCESS_ORDER);
         } catch (DataException e) {
             throw new DaoException(e.getMessage(), e);
         }
-
     }
 
     @Override

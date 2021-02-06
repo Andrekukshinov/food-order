@@ -9,6 +9,9 @@ import java.util.Map;
 import java.util.Set;
 
 public class CartManagerImpl implements CartManager {
+    private static final String CART_OPENING = "=== Cart ===\n";
+    private static final String LINE = "===============";
+    private static final String EMPTY_CART = "Cart is empty\n";
     private Cart cart;
 
     public CartManagerImpl(Cart cart) {//ссылка на корзину
@@ -42,17 +45,19 @@ public class CartManagerImpl implements CartManager {
     }
 
     @Override
-    public void render() {
+    public String render() {
         Map<Long, CartItem> products = cart.getProducts();
-        System.out.println("=== Cart ===");
+        StringBuilder result = new StringBuilder(CART_OPENING);
         if(products.isEmpty()) {
-            System.out.println("Cart is empty");
+            result.append(EMPTY_CART);
         } else {
             for (Long i : products.keySet()) {
-                System.out.println(products.get(i).toString());
+                result.append(products.get(i).toString());
+                result.append("\n");
             }
         }
-        System.out.println("===============");
+        result.append(LINE);
+        return result.toString();
     }
 
     @Override

@@ -28,10 +28,13 @@ public class Catalog {
     }
 
 //    todo move methods
-    public void render() {
+    public String render() {
+        StringBuilder result = new StringBuilder();
         for (Long i : catalog.keySet()) {
-            System.out.println(i + " " + catalog.get(i).toString());
+            result.append(i).append(" ").append(catalog.get(i).toString());
+            result.append("\n");
         }
+        return result.toString();
     }
 
     public Optional<Product> getProduct(Long productId) {

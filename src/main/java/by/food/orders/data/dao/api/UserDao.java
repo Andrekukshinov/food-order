@@ -6,13 +6,8 @@ import by.food.orders.exception.DataException;
 
 import java.util.List;
 import java.util.Optional;
-/*Optional — объект-контейнер, используемый для хранения ненулевых объектов.
-Необязательный объект используется для представления нулевого значения с отсутствующим значением.*/
 
 public interface UserDao {
     Optional<User> findByCredentials(String login, String pass) throws DaoException; /**/
 
-//    void saveUsersToFile() throws DaoException, DataException;
-
-    List<User> getUserFromFile() throws DaoException;
 }

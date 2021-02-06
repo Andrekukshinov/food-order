@@ -12,21 +12,6 @@ import java.util.List;
 public class OrderDataReaderImpl implements DataReader<Order> {
 
     @Override
-    public List<String> readData(String filePath) throws DataException {
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            List<String> result = new ArrayList<>();
-            String currentOrder = reader.readLine();
-            while (currentOrder != null) {
-                result.add(currentOrder);
-                currentOrder = reader.readLine();
-            }
-            return result;
-        } catch (IOException e) {
-            throw new DataException(e.getMessage(), e);
-        }
-    }
-
-    @Override
     public List<Order> readJSONData(String filePath) throws DataException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder result = new StringBuilder();

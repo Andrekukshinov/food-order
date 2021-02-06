@@ -19,7 +19,6 @@ public class OrderManager {
         List<Long> productIds = new ArrayList<>();
         BigDecimal totalPrice = getTotalPrice(cartItems);
         addProductsToCart(cartItems, productIds);
-        //fixme change id value
         int id = -1;
         return new Order(id, orderDate, deliveryDate, buyerId, productIds, totalPrice);
     }

@@ -10,7 +10,7 @@ public interface CartManager {
 
     List<CartItem> getCartItems();
 
-    void render();
+    String render();
 
     void clearCart();
 }

@@ -13,12 +13,6 @@ import com.google.gson.reflect.TypeToken;
 
 public class UserDataReaderImpl implements DataReader<User> {
 
-
-    @Override
-    public List<String> readData(String filePath) {
-        return null;
-    }
-
     @Override
     public List<User> readJSONData(String filePath) throws DataException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
