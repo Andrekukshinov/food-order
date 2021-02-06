@@ -1,18 +1,20 @@
 package by.food.orders.data.reader;
 
-import by.food.orders.entity.Order;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.util.List;
+
+import by.food.orders.entity.User;
 import by.food.orders.exception.DataException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import java.io.*;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
-public class OrderDataReaderImpl implements DataReader<Order> {
+public class UserDataReaderImpl implements DataReader<User> {
 
     @Override
-    public List<Order> readJSONData(String filePath) throws DataException {
+    public List<User> readJSONData(String filePath) throws DataException {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             StringBuilder result = new StringBuilder();
             String currentOrder = reader.readLine();
@@ -21,12 +23,11 @@ public class OrderDataReaderImpl implements DataReader<Order> {
                 currentOrder = reader.readLine();
             }
             String resultJSONStr = result.toString();
-            Type listType = new TypeToken<List<Order>>(){}.getType();
-            List<Order> resultList = new Gson().fromJson(resultJSONStr, listType);
-            return resultList;
+            Type listType = new TypeToken<List<User>>() {
+            }.getType();
+            return new Gson().fromJson(resultJSONStr, listType);
         } catch (IOException e) {
             throw new DataException(e.getMessage(), e);
         }
     }
-
 }

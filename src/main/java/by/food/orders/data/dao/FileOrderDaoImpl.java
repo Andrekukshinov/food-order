@@ -14,28 +14,33 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FileOrderDaoImpl implements OrderDao {
-    private String outputFileName = "src/data/source/orders.json";
+    private static final String SUCCESS_ORDER = "Your order was saved successfully";
+    private final String filePath;
+
+    public FileOrderDaoImpl(String filePath) {
+        this.filePath = filePath;
+    }
+
 
     //wrong
     @Override
     public void save(Order order) throws DaoException {
         try {
-            DataWriter<Order> dataWriter = new OrderDataWriterImpl();
+            DataWriter<Order> dataWriter = new OrderDataWriterImpl(filePath);
             List<Order> orders = getAll();
             orders.add(order);
-            dataWriter.writeJSONData(outputFileName, orders);
-            System.out.println("Your order was saved successfully");
+            dataWriter.writeJSONData(orders);
+            System.out.println(SUCCESS_ORDER);
         } catch (DataException e) {
             throw new DaoException(e.getMessage(), e);
         }
-
     }
 
     @Override
     public List<Order> getAll() throws DaoException {
         try {
             DataReader<Order> dataReader = new OrderDataReaderImpl();
-            List<Order> orders = dataReader.readJSONData(outputFileName);
+            List<Order> orders = dataReader.readJSONData(filePath);
             return orders != null ? orders : new ArrayList<>();
         } catch (DataException e) {
             throw new DaoException(e.getMessage(), e);
